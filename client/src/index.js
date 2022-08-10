@@ -4,20 +4,20 @@ import robot from "./robot";
 
 class App extends Component {
   state = {
-    title: "",
+    pTag: "",
     browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://example.com"
+    url: "https://orenburg.ru/activity/16280/"
   };
   componentDidMount() {
-    // this.fetchTitle();
+    // this.fetchPTag();
   }
-  fetchTitle = async () => {
+  fetchPTag = async () => {
     const { browserWSEndpoint, url } = this.state;
-    const title = await robot({
+    const pTag = await robot({
       browserWSEndpoint,
       url
     });
-    this.setState({ title });
+    this.setState({ pTag });
   };
   changeValue = event => {
     const { name, value } = event.target;
@@ -37,8 +37,8 @@ class App extends Component {
             value={this.state.url}
             name="url"
           />
-          <button onClick={this.fetchTitle}>Get Title</button>
-          <h1>{this.state.title}</h1>
+          <button onClick={this.fetchPTag}>Get pTag</button>
+          <div>{this.state.pTag}</div>
         </div>
       </div>
     );
