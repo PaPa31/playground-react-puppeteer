@@ -15,7 +15,12 @@ async function getTitle({ browserWSEndpoint, url }) {
   try {
     await page.goto(url, { waitUntil: 'load', timeout: 0 });
 
-    const result = page.evaluate(() => document.title);
+    const result = page.evaluate(
+      () =>
+      Array.from(document.querySelector("main").querySelectorAll("p")).map(
+        (elem) => elem.innerHTML
+      ).join(",\n")
+    );
     
     return result
   } catch (err) {
