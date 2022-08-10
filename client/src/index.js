@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import robot from "./robot";
 
 class App extends Component {
   state = {
     title: "",
     browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://example.com"
+    url: "https://orenburg.ru/activity/16280/"
   };
   componentDidMount() {
     // this.fetchTitle();
@@ -45,4 +45,7 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const container = document.getElementById("app");
+const root = createRoot(container);
+
+root.render(<App tab="home" />);

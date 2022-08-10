@@ -7,10 +7,12 @@ const port = 4000;
 http
   .createServer()
   .on("upgrade", async (req, socket, head) => {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ args: ['--disable-gpu', '--no-sandbox', '--lang=en-US', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] , headless: true });
     const target = browser.wsEndpoint();
+        //browser.disconnect()
 
     proxy.ws(req, socket, head, { target });
+
   })
   .listen(port, function() {
     console.log(`proxy server running at ${port}`);
