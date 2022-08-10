@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import robot from "./robot";
+import data from "./orenburg-bus.json";
+
+//let ff = [];
 
 class App extends Component {
   state = {
-    pTag: "",
+    pTag: [],
     browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://orenburg.ru/activity/16280/"
+    url: "https://orenburg.ru/activity/16280/",
   };
+
   componentDidMount() {
     // this.fetchPTag();
   }
@@ -15,11 +19,12 @@ class App extends Component {
     const { browserWSEndpoint, url } = this.state;
     const pTag = await robot({
       browserWSEndpoint,
-      url
+      url,
     });
     this.setState({ pTag });
+    //ff = this.state.pTag;
   };
-  changeValue = event => {
+  changeValue = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
@@ -38,7 +43,11 @@ class App extends Component {
             name="url"
           />
           <button onClick={this.fetchPTag}>Get pTag</button>
-          <div>{this.state.pTag}</div>
+          <div>
+            {data.map((p, i) => {
+              return <p key={i}>{p.match(/\d{1,2}\.\d{2}/g)}</p>;
+            })}
+          </div>
         </div>
       </div>
     );

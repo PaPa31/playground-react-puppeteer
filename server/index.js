@@ -7,7 +7,7 @@ const port = 4000;
 http
   .createServer()
   .on("upgrade", async (req, socket, head) => {
-    const browser = await puppeteer.launch({ args: ['--disable-gpu', '--no-sandbox', '--lang=en-US', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] , headless: true });
+    const browser = await puppeteer.launch({ args: ['--disable-gpu', '--no-sandbox', '--lang=en-US', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] , headless: false });
     const target = browser.wsEndpoint();
         //browser.disconnect()
 
