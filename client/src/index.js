@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom";
 import robot from "./robot";
 
 class App extends Component {
   state = {
-    pTags: "",
+    title: "",
     browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://orenburg.ru/activity/16280/"
+    url: "https://example.com"
   };
   componentDidMount() {
     // this.fetchTitle();
   }
-  fetchPTags = async () => {
+  fetchTitle = async () => {
     const { browserWSEndpoint, url } = this.state;
-    const pTags = await robot({
+    const title = await robot({
       browserWSEndpoint,
       url
     });
-    this.setState({ pTags });
+    this.setState({ title });
   };
   changeValue = event => {
     const { name, value } = event.target;
@@ -37,15 +37,12 @@ class App extends Component {
             value={this.state.url}
             name="url"
           />
-          <button onClick={this.fetchPTags}>Get pTags</button>
-          <div>{this.state.pTags}</div>
+          <button onClick={this.fetchTitle}>Get Title</button>
+          <h1>{this.state.title}</h1>
         </div>
       </div>
     );
   }
 }
 
-const container = document.getElementById("app");
-const root = createRoot(container);
-
-root.render(<App tab="home" />);
+ReactDOM.render(<App />, document.getElementById("app"));
