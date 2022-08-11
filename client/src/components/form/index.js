@@ -9,10 +9,10 @@ const { Item } = Form;
 class NormalLoginForm extends Component {
   state = {
     loading: false,
-    comment: "",
+    comment: `Click "Get PTag" above ^^`,
     pTag: [],
-    browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://orenburg.ru/activity/16280/"
+    browserWSEndpoint: "no need",
+    url: "orenburg-bus.json"
   };
 
   handleSubmit = e => {
@@ -27,11 +27,14 @@ class NormalLoginForm extends Component {
   fetchPTag = async () => {
     this.setState({ loading: true, comment: "Fetching..." });
     const { browserWSEndpoint, url } = this.state;
-    const pTag = await robot({
-      browserWSEndpoint,
-      url
-    });
-    this.setState({ comment: "", pTag, loading: false });
+    if (this.state.loading) {
+      alert("hi");
+      const pTag = await robot({
+        browserWSEndpoint,
+        url
+      });
+    }
+    this.setState({ comment: "Fetched", pTag: data, loading: false });
   };
 
   changeValue = event => {
@@ -45,7 +48,7 @@ class NormalLoginForm extends Component {
         <Item>
           <Input
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="ws://127.0.0.1:4000"
+            placeholder="No need"
             onChange={this.changeValue}
             value={this.state.browserWSEndpoint}
             name="browserWSEndpoint"
@@ -54,7 +57,7 @@ class NormalLoginForm extends Component {
         <Item>
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="https://orenburg.ru/activity/16280/"
+            placeholder="orenburg-bus.json"
             onChange={this.changeValue}
             value={this.state.url}
             name="url"
@@ -74,10 +77,11 @@ class NormalLoginForm extends Component {
           <div>
             <Spin spinning={this.state.loading}>
               <b>PTag: </b>
-              {this.state.pTag.map((p, i) => {
-                return <p key={i}>{p.match(/\d{1,2}\.\d{2}/g)}</p>;
-              })}
-              {(this.state.comment = `Click "Get PTag" above ^^`)}
+              {this.state.comment}
+              {this.state.comment == "Fetched" &&
+                data.map((p, i) => {
+                  return <p key={i}>{p.match(/\d{1,2}\.\d{2}/g)}</p>;
+                })}
             </Spin>
           </div>
         </Item>
