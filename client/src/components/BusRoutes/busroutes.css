@@ -1,0 +1,15 @@
+.BusRoutes {
+  width: auto;
+  max-width: 600px;
+  float: left;
+  margin: 0 10px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import classes from "./Bus.module.css";
+import "./bus.css";
 import BusRoutes from "../BusRoutes/BusRoutes";
 
 class Bus extends Component {
@@ -7,7 +7,7 @@ class Bus extends Component {
     buses: [],
     selectedBus: null,
     normUrl:
-      "https://raw.githubusercontent.com/PaPa31/hm/documentation/static/_rasp"
+      "https://raw.githubusercontent.com/PaPa31/hm/documentation/static/_rasp",
   };
 
   componentDidMount() {
@@ -15,7 +15,7 @@ class Bus extends Component {
       let div = await (await fetch(url)).text();
       let p = div
         .match(/<p.*/g)
-        .map(p => p.replace(/.*>([^<\r]*)<.*/g, "$1").trim());
+        .map((p) => p.replace(/.*>([^<\r]*)<.*/g, "$1").trim());
       console.log("p = " + p);
       return p;
     }
@@ -26,7 +26,7 @@ class Bus extends Component {
         (this.state.selectedBus && this.state.selectedBus.id !== this.props.num)
       ) {
         fetchAndParse(this.state.normUrl + `${this.props.num}` + ".html").then(
-          p => {
+          (p) => {
             return this.setState({ selectedBus: p });
           }
         );
@@ -65,7 +65,7 @@ class Bus extends Component {
               </div>
               <h1>{this.props.num}</h1>
               <div>
-                <div className={classes.BusRoutes}>
+                <div className="Bus">
                   <BusRoutes
                     polReisa={polReisa}
                     dir="tuda"

@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import classes from "./Toggler.module.css";
+import "./index.css";
 import Buses from "./components/Buses/Buses";
 
 const BUSES = {
@@ -11,8 +11,8 @@ const BUSES = {
     { id: "20210330005200", name: "Клиффорд", num: 296 },
     { id: "20220611183712", name: "РТИ", num: 297 },
     { id: "20210330005205", name: "Клиффорд", num: 100 },
-    { id: "20210330005209", name: "Клиффорд", num: 110 }
-  ]
+    { id: "20210330005209", name: "Клиффорд", num: 110 },
+  ],
 };
 
 class Toggler extends Component {
@@ -23,7 +23,7 @@ class Toggler extends Component {
   state = {
     buses: [],
     showBuses: false,
-    changeCounter: 0
+    changeCounter: 0,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -35,7 +35,7 @@ class Toggler extends Component {
     console.log("[Toggler/index.js] componentDidMount");
   }
 
-  onlyBusesHandler = id => {
+  onlyBusesHandler = (id) => {
     console.log("Hi");
     const buses = [];
     BUSES.buses.map((bus, index) => {
@@ -57,30 +57,19 @@ class Toggler extends Component {
   render() {
     console.log("[Toggler/index.js] render");
     let buses = null;
-    let btnClass = "";
 
     if (this.state.showBuses) {
       buses = <Buses buses={this.state.buses} />;
-      btnClass = classes.Red;
-    }
-
-    const assignedClasses = [];
-    if (this.state.buses.length <= 2) {
-      assignedClasses.push(classes.red);
-    }
-    if (this.state.buses.length <= 1) {
-      assignedClasses.push(classes.bold);
     }
 
     return (
-      <div className={classes.Toggler}>
+      <div className="Toggler">
         <h1>Hi, I'm a React app!</h1>
-        <p className={assignedClasses.join(" ")}>This is really working!</p>
+        <p>This is really working!</p>
         {BUSES.buses.map((bus, index) => {
           return (
             <button
               key={index}
-              className={btnClass}
               onClick={() => {
                 this.onlyBusesHandler(bus.id);
               }}

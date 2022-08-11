@@ -1,7 +1,7 @@
 import React from "react";
-import classes from "./BusRoutes.module.css";
+import "./busroutes.css";
 
-const busRoutes = props => {
+const busRoutes = (props) => {
   function ShowTime({ p }) {
     return (
       <tr>
@@ -11,7 +11,7 @@ const busRoutes = props => {
   }
 
   return (
-    <div className={classes.BusRoutes}>
+    <div className="BusRoutes">
       {props.polReisa > 0 && props.dir === "tuda" ? (
         <p>{props.name}:</p>
       ) : (
