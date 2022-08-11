@@ -64,8 +64,8 @@ class Toggler extends Component {
 
     return (
       <div className="Toggler">
-        <h1>Hi, I'm a React app!</h1>
-        <p>This is really working!</p>
+        <h1>Da4aBus</h1>
+        <p>Выберите маршрут:</p>
         {BUSES.buses.map((bus, index) => {
           return (
             <button
