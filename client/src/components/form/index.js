@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
 import robot from "../../services/robot/index";
+import data from "./orenburg-bus.json";
 
 import { Spin, Form, Icon, Input, Button, Divider } from "antd";
 const { Item } = Form;
@@ -8,28 +9,29 @@ const { Item } = Form;
 class NormalLoginForm extends Component {
   state = {
     loading: false,
-    title: "",
+    comment: "",
+    pTag: [],
     browserWSEndpoint: "ws://127.0.0.1:4000",
-    url: "https://example.com"
+    url: "https://orenburg.ru/activity/16280/"
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.fetchTitle();
+    this.fetchPTag();
   };
 
   componentDidMount() {
-    // this.fetchTitle();
+    // this.fetchPTag();
   }
 
-  fetchTitle = async () => {
-    this.setState({ loading: true, title: "Fetching..." });
+  fetchPTag = async () => {
+    this.setState({ loading: true, comment: "Fetching..." });
     const { browserWSEndpoint, url } = this.state;
-    const title = await robot({
+    const pTag = await robot({
       browserWSEndpoint,
       url
     });
-    this.setState({ title, loading: false });
+    this.setState({ comment: "", pTag, loading: false });
   };
 
   changeValue = event => {
@@ -52,7 +54,7 @@ class NormalLoginForm extends Component {
         <Item>
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="https://example.com"
+            placeholder="https://orenburg.ru/activity/16280/"
             onChange={this.changeValue}
             value={this.state.url}
             name="url"
@@ -64,15 +66,18 @@ class NormalLoginForm extends Component {
             htmlType="submit"
             className="login-form-button"
           >
-            Get Title
+            Get PTag
           </Button>
         </Item>
         <Divider />
         <Item>
           <div>
             <Spin spinning={this.state.loading}>
-              <b>Title: </b>
-              {this.state.title || `Click "Get Title" above ^^`}
+              <b>PTag: </b>
+              {this.state.pTag.map((p, i) => {
+                return <p key={i}>{p.match(/\d{1,2}\.\d{2}/g)}</p>;
+              })}
+              {(this.state.comment = `Click "Get PTag" above ^^`)}
             </Spin>
           </div>
         </Item>

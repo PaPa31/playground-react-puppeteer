@@ -1,6 +1,6 @@
-import puppeteer from "puppeteer";
+const puppeteer = require("puppeteer");
 
-async function getTitle({ browserWSEndpoint, url }) {
+async function getPTag({ browserWSEndpoint, url }) {
   // fetch our running browser
   const browser = await puppeteer.connect({
     browserWSEndpoint
@@ -8,14 +8,26 @@ async function getTitle({ browserWSEndpoint, url }) {
 
   // start the actual automation
   const page = await browser.newPage();
-  await page.goto(url);
-  const result = await page.title();
-  
-  // cleanup
-  await page.close();
-  await browser.close();
 
-  return result;
+  try {
+    await page.goto(url, { waitUntil: "load", timeout: 0 });
+
+    const result = await page.evaluate(
+      () =>
+        Array.from(document.querySelector("main").querySelectorAll("p")).map(
+          elem => elem.innerHTML
+        )
+      //.join(",\n")
+    );
+
+    // cleanup
+    await page.close();
+    await browser.close();
+    return result;
+  } catch (err) {
+    console.error(err.message);
+    return false;
+  }
 }
 
-export default getTitle;
+export default getPTag;
