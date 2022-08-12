@@ -4,7 +4,9 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";
-import Buses from "./components/Buses/Buses";
+import Bus from "./components/Bus/Bus";
+
+let buses = [];
 
 const BUSES = {
   buses: [
@@ -22,7 +24,7 @@ class Toggler extends Component {
   }
   state = {
     buses: [],
-    showBuses: false,
+    showBuses: [false, false, false, false],
     changeCounter: 0,
   };
 
@@ -37,32 +39,59 @@ class Toggler extends Component {
 
   onlyBusesHandler = (id) => {
     console.log("Hi");
-    const buses = [];
+
     BUSES.buses.map((bus, index) => {
       console.log("id = " + id);
       console.log("bus.id = " + bus.id);
       if (id === bus.id) {
         console.log("Sovpalo");
-        buses[index] = bus;
+
+        //const doesShow = !this.state.showBuses;
+
+        const newShowBuses = [...this.state.showBuses];
+        newShowBuses[index] = !this.state.showBuses[index];
+        this.setState({ showBuses: newShowBuses }, function () {
+          console.log("THIS " + this.state.showBuses);
+        });
+
+        if (newShowBuses[index]) {
+          console.log("FUUGGG");
+          buses[index] = bus;
+        } else {
+          buses[index] = null;
+        }
         console.log(buses);
+        //const newBuses = [...this.state.buses];
+        //newBuses[index] = bus;
+        this.setState({ buses: buses }, function () {
+          console.log("THIS " + JSON.stringify(this.state.buses));
+        });
+
+        //const doesShow = true;
+        //this.setState({ showBuses: doesShow });
       }
     });
-
-    this.setState({ buses: buses });
-
-    const doesShow = true;
-    this.setState({ showBuses: doesShow });
   };
 
   render() {
     console.log("[Toggler/index.js] render");
-    let buses = null;
+    let _buses = null;
     let btnClass = null;
 
-    if (this.state.showBuses) {
-      buses = <Buses buses={this.state.buses} />;
-      btnClass = "Red";
-    }
+    //if (this.state.showBuses) {
+    _buses = this.state.buses.map((bus, i) => {
+      //console.log("BBUSS.NUMMM " + bus.num);
+      //console.log(bus.id);
+      return (
+        this.state.showBuses[i] && (
+          <Bus key={bus.id} id={bus.id} num={bus.num} name={bus.name} />
+        )
+      );
+    });
+
+    //_buses = <Buses buses={this.state.buses} />;
+    btnClass = "Red";
+    //}
 
     const assignedClasses = [];
     if (this.state.buses.length <= 2) {
@@ -89,7 +118,7 @@ class Toggler extends Component {
             </button>
           );
         })}
-        {buses}
+        {_buses}
       </div>
     );
   }
