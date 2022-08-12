@@ -109,7 +109,7 @@ class Toggler extends Component {
           return (
             <button
               key={index}
-              className={btnClass}
+              className={this.state.showBuses[index] && btnClass}
               onClick={() => {
                 this.onlyBusesHandler(bus.id);
               }}
