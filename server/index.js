@@ -15,7 +15,7 @@ http
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
       ],
-      headless: false,
+      headless: true,
     });
     const target = browser.wsEndpoint();
 

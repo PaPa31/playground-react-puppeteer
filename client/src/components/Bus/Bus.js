@@ -1,35 +1,79 @@
 import React, { Component } from "react";
 import "./bus.css";
 import BusRoutes from "../BusRoutes/BusRoutes";
+import puppeteer from "../../../puppeteer";
 
 class Bus extends Component {
   state = {
+    id: "",
     buses: [],
     selectedBus: null,
-    normUrl:
-      "https://raw.githubusercontent.com/PaPa31/hm/documentation/static/_rasp",
+    url: "https://orenburg.ru/activity/",
   };
 
   componentDidMount() {
-    async function fetchAndParse(url) {
-      let div = await (await fetch(url)).text();
-      let p = div
-        .match(/<p.*/g)
-        .map((p) => p.replace(/.*>([^<\r]*)<.*/g, "$1").trim());
-      console.log("p = " + p);
-      return p;
+    console.log("2 DidMount");
+    //const puppeteer = require("puppeteer");
+
+    async function fetchAndParse({ browserWSEndpoint, url }) {
+      console.log(url);
+
+      try {
+        const browser = await puppeteer.connect({
+          browserWSEndpoint,
+        });
+
+        const page = await browser.newPage();
+
+        await page.setRequestInterception(true);
+        page.on("request", (request) => {
+          if (
+            ["image", "stylesheet", "font", "script"].indexOf(
+              request.resourceType()
+            ) !== -1
+          ) {
+            request.abort();
+          } else {
+            request.continue();
+          }
+        });
+
+        await page.goto(url, { waitUntil: "load", timeout: 0 });
+
+        let data = await page.evaluate(
+          () =>
+            Array.from(
+              document.querySelector("main").querySelectorAll("p")
+            ).map((elem) => elem.innerHTML)
+          //.join(",\n")
+        );
+
+        console.log(data);
+        await page.close();
+        await browser.close();
+
+        return data;
+      } catch (err) {
+        console.error(err.message);
+        return false;
+      }
     }
+
+    console.log("hren:" + this.props.id);
 
     if (this.props.num) {
       if (
         !this.state.selectedBus ||
         (this.state.selectedBus && this.state.selectedBus.id !== this.props.num)
       ) {
-        fetchAndParse(this.state.normUrl + `${this.props.num}` + ".html").then(
-          (p) => {
-            return this.setState({ selectedBus: p });
-          }
-        );
+        console.log(this.props.id);
+        const normUrl = `${this.state.url}` + `${this.props.id}`;
+        fetchAndParse({
+          browserWSEndpoint: "ws://127.0.0.1:4000",
+          url: normUrl,
+        }).then((p) => {
+          return this.setState({ selectedBus: p });
+        });
       }
     }
   }

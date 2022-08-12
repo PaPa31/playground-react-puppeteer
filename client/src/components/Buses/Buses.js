@@ -1,12 +1,12 @@
 import React from "react";
 import Bus from "../Bus/Bus";
 
-const buses = props => {
+const buses = (props) => {
   console.log("[Buses.js] rendering...");
-  return props.buses.map((bus, index) => {
+  return props.buses.map((bus) => {
     console.log(bus.num);
-
-    return <Bus key={index} num={bus.num} name={bus.name} />;
+    console.log(bus.id);
+    return <Bus key={bus.id} id={bus.id} num={bus.num} name={bus.name} />;
   });
 };
 export default buses;
