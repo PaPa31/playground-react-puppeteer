@@ -79,9 +79,9 @@ class Bus extends Component {
   }
 
   render() {
-    let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
+    let post = <p>Please select a bus route!</p>;
     if (this.props.num) {
-      post = <p style={{ textAlign: "center" }}>Loading...!</p>;
+      post = <p>Loading...!</p>;
     }
     if (this.state.selectedBus) {
       const length = this.state.selectedBus.length;

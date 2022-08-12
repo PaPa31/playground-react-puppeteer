@@ -57,19 +57,30 @@ class Toggler extends Component {
   render() {
     console.log("[Toggler/index.js] render");
     let buses = null;
+    let btnClass = null;
 
     if (this.state.showBuses) {
       buses = <Buses buses={this.state.buses} />;
+      btnClass = "Red";
+    }
+
+    const assignedClasses = [];
+    if (this.state.buses.length <= 2) {
+      assignedClasses.push("red");
+    }
+    if (this.state.buses.length <= 1) {
+      assignedClasses.push("bold");
     }
 
     return (
       <div className="Toggler">
         <h1>Da4aBus</h1>
-        <p>Выберите маршрут:</p>
+        <p className={assignedClasses.join(" ")}>Выберите маршрут:</p>
         {BUSES.buses.map((bus, index) => {
           return (
             <button
               key={index}
+              className={btnClass}
               onClick={() => {
                 this.onlyBusesHandler(bus.id);
               }}
