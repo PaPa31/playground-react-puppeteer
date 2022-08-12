@@ -15,6 +15,7 @@ http
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
       ],
+      userDataDir: "./cache",
       headless: true,
     });
     const target = browser.wsEndpoint();
