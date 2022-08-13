@@ -1,3 +1,9 @@
 .Bus {
   display: inline-block;
 }
+.Main,
+.Head,
+.One {
+  display: inline-block;
+  float: left;
+}

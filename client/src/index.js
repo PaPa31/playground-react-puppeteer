@@ -114,19 +114,21 @@ class Toggler extends Component {
       <div className="Toggler">
         <h1>Da4aBus</h1>
         <p className={assignedClasses.join(" ")}>Выберите маршрут:</p>
-        {BUSES.buses.map((bus, index) => {
-          return (
-            <button
-              key={index}
-              className={this.state.showBuses[index] ? btnClass : undefined}
-              onClick={() => {
-                this.onlyBusesHandler(bus.id);
-              }}
-            >
-              {bus.num}
-            </button>
-          );
-        })}
+        <div className="Button">
+          {BUSES.buses.map((bus, index) => {
+            return (
+              <button
+                key={index}
+                className={this.state.showBuses[index] ? btnClass : undefined}
+                onClick={() => {
+                  this.onlyBusesHandler(bus.id);
+                }}
+              >
+                {bus.num}
+              </button>
+            );
+          })}
+        </div>
         {_buses}
       </div>
     );

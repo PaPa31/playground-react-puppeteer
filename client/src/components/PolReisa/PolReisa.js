@@ -1,5 +1,5 @@
 import React from "react";
-import "./busroutes.css";
+import "./PolReisa.css";
 
 const busRoutes = (props) => {
   function ShowTime({ p }) {
@@ -12,19 +12,19 @@ const busRoutes = (props) => {
 
   return (
     <div className="BusRoutes">
-      {props.polReisa > 0 && props.dir === "tuda" ? (
+      {props.trip > 0 && props.dir === "tuda" ? (
         <p>{props.name}:</p>
       ) : (
         <p>Сады:</p>
       )}
       <table>
         <tbody>
-          {props.polReisa > 0 && props.dir === "tuda"
+          {props.trip > 0 && props.dir === "tuda"
             ? props.tudaObratno.map((p, id) =>
-                id < props.polReisa / 2 ? <ShowTime key={id} p={p} /> : null
+                id < props.trip / 2 ? <ShowTime key={id} p={p} /> : null
               )
             : props.tudaObratno.map((p, id) =>
-                id >= props.polReisa / 2 ? <ShowTime key={id} p={p} /> : null
+                id >= props.trip / 2 ? <ShowTime key={id} p={p} /> : null
               )}
         </tbody>
       </table>

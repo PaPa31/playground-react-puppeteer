@@ -51,3 +51,7 @@ button:hover {
   background-color: black;
   color: white;
 }*/
+
+.Button {
+  text-align: center;
+}
