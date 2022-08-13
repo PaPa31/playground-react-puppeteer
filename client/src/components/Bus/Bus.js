@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./bus.css";
-import BusRoutes from "../BusRoutes/BusRoutes";
+import trip from "../trip/trip";
 import puppeteer from "../../../puppeteer";
 
 class Bus extends Component {
@@ -89,9 +89,9 @@ class Bus extends Component {
     if (busic) {
       const length = busic.length;
       console.log("length = " + length);
-      let polReisa = 0;
+      let trip = 0;
       let tudaObratno = [[]];
-      let mas = 0;
+      let mas = -1;
       let firstTime = true;
       //let timeFirst = true;
       //let noTimeFirst = true;
@@ -103,27 +103,40 @@ class Bus extends Component {
             firstTime = false;
             //  start a new Array
             mas++;
-            polReisa = 0;
+            trip = 0;
+            tudaObratno[mas] = [];
           }
           // put in cell of the current Array
-          tudaObratno[mas][polReisa] = busic[i];
-          polReisa++;
-        } else if (
-          /\d{1,2}\.\d{2}\.\d{2,4}/.test(busic[i]) ||
-          /[Рабочие|Выходные]/.test(busic[i])
-        ) {
+          tudaObratno[mas][trip] = busic[i];
+          trip++;
+          // save trip
+          tudaObratno[mas][-1] = trip;
+        } else if (/\d{1,2}\.\d{2}\.\d{2,4}/.test(busic[i])) {
           if (firstTime) {
             firstTime = false;
             //  start a new Array
             mas++;
-            polReisa = 0;
+            trip = 0;
+            tudaObratno[mas] = [];
           }
-          //put in head of the current Array
+          //save main head
+          tudaObratno[mas][-2] = busic[i];
+        } else if (/[Рабочие|Выходные]/.test(busic[i])) {
+          if (firstTime) {
+            firstTime = false;
+            //  start a new Array
+            mas++;
+            trip = 0;
+            tudaObratno[mas] = [];
+          }
+          // save secondary head
+          tudaObratno[mas][-3] = busic[i];
         } else if (/Перевозчик/.test(busic[i])) {
           firstTime = true;
           if (footer) {
             footer = false;
-            // put in footer of the current Array
+            // save footer
+            tudaObratno[mas][-4] = busic[i];
           }
         }
 
@@ -134,32 +147,32 @@ class Bus extends Component {
         //  firstTime
         //) {
         //  firstTime = false;
-        //  tudaObratno[0][polReisa] = busic[i];
-        //  polReisa++;
+        //  tudaObratno[0][trip] = busic[i];
+        //  trip++;
         //}
       }
 
-      console.log("polReisa " + polReisa);
+      console.log("trip " + trip);
       console.log("tudaObratno " + tudaObratno);
 
       let count = 0;
 
       post = (
         <div>
-          {polReisa > 0 ? (
+          {trip > 0 ? (
             <div>
               <div>{console.log("[Bus.js] REturning..." + busic)}</div>
               <h1>{this.props.num}</h1>
               <div>
                 <div className="Bus">
-                  <BusRoutes
-                    polReisa={polReisa}
+                  <trip
+                    trip={trip}
                     dir="tuda"
                     name={this.props.name}
                     tudaObratno={tudaObratno}
                   />
-                  <BusRoutes
-                    polReisa={polReisa}
+                  <trip
+                    trip={trip}
                     dir="obratno"
                     name={this.props.name}
                     tudaObratno={tudaObratno}
