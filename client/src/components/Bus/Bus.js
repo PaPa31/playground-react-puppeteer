@@ -61,11 +61,10 @@ class Bus extends Component {
 
     console.log("hren:" + this.props.id);
 
+    const b = this.state.selectedBus;
+
     if (this.props.num) {
-      if (
-        !this.state.selectedBus ||
-        (this.state.selectedBus && this.state.selectedBus.id !== this.props.num)
-      ) {
+      if (!b || (b && b.id !== this.props.num)) {
         console.log(this.props.id);
         const normUrl = `${this.state.url}` + `${this.props.id}`;
         fetchAndParse({
@@ -83,14 +82,18 @@ class Bus extends Component {
     if (this.props.num) {
       post = <p>Loading...!</p>;
     }
-    if (this.state.selectedBus) {
-      const length = this.state.selectedBus.length;
+
+    const busic = this.state.selectedBus;
+    console.log("busic " + busic);
+
+    if (busic) {
+      const length = busic.length;
       console.log("length = " + length);
       let polReisa = 0;
       let tudaObratno = [];
       for (let i = 0; i < length; i++) {
-        if (/^\d/.test(this.state.selectedBus[i])) {
-          tudaObratno[polReisa] = this.state.selectedBus[i];
+        if (/^\d/.test(busic[i])) {
+          tudaObratno[polReisa] = busic[i];
           polReisa++;
         }
       }
@@ -104,9 +107,7 @@ class Bus extends Component {
         <div>
           {polReisa > 0 ? (
             <div>
-              <div>
-                {console.log("[Bus.js] REturning..." + this.state.selectedBus)}
-              </div>
+              <div>{console.log("[Bus.js] REturning..." + busic)}</div>
               <h1>{this.props.num}</h1>
               <div>
                 <div className="Bus">
