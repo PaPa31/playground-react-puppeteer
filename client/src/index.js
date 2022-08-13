@@ -73,6 +73,12 @@ class Toggler extends Component {
     });
   };
 
+  noNull = (array) => {
+    let j = 0;
+    array.map((i) => (i ? j++ : null));
+    return j;
+  };
+
   render() {
     console.log("[Toggler/index.js] render");
     let _buses = null;
@@ -82,22 +88,25 @@ class Toggler extends Component {
     _buses = this.state.buses.map((bus, i) => {
       //console.log("BBUSS.NUMMM " + bus.num);
       //console.log(bus.id);
-      return (
-        this.state.showBuses[i] && (
-          <Bus key={bus.id} id={bus.id} num={bus.num} name={bus.name} />
-        )
-      );
+      return this.state.showBuses[i] ? (
+        <Bus key={bus.id} id={bus.id} num={bus.num} name={bus.name} />
+      ) : undefined;
     });
 
     //_buses = <Buses buses={this.state.buses} />;
     btnClass = "Red";
     //}
 
+    console.log("this.state.buses.length = " + this.state.buses.length);
+
+    const length = this.noNull(this.state.showBuses);
+    console.log(length);
+
     const assignedClasses = [];
-    if (this.state.buses.length <= 2) {
+    if (length <= 2) {
       assignedClasses.push("red");
     }
-    if (this.state.buses.length <= 1) {
+    if (length <= 1) {
       assignedClasses.push("bold");
     }
 
@@ -109,7 +118,7 @@ class Toggler extends Component {
           return (
             <button
               key={index}
-              className={this.state.showBuses[index] && btnClass}
+              className={this.state.showBuses[index] ? btnClass : undefined}
               onClick={() => {
                 this.onlyBusesHandler(bus.id);
               }}
