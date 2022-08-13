@@ -90,12 +90,53 @@ class Bus extends Component {
       const length = busic.length;
       console.log("length = " + length);
       let polReisa = 0;
-      let tudaObratno = [];
+      let tudaObratno = [[]];
+      let mas = 0;
+      let firstTime = true;
+      //let timeFirst = true;
+      //let noTimeFirst = true;
+      let footer = true;
       for (let i = 0; i < length; i++) {
-        if (/^\d/.test(busic[i])) {
-          tudaObratno[polReisa] = busic[i];
+        //p.match(/\d{1,2}\.\d{2}/g);
+        if (/\d{1,2}\.\d{2}/.test(busic[i])) {
+          if (firstTime) {
+            firstTime = false;
+            //  start a new Array
+            mas++;
+            polReisa = 0;
+          }
+          // put in cell of the current Array
+          tudaObratno[mas][polReisa] = busic[i];
           polReisa++;
+        } else if (
+          /\d{1,2}\.\d{2}\.\d{2,4}/.test(busic[i]) ||
+          /[Рабочие|Выходные]/.test(busic[i])
+        ) {
+          if (firstTime) {
+            firstTime = false;
+            //  start a new Array
+            mas++;
+            polReisa = 0;
+          }
+          //put in head of the current Array
+        } else if (/Перевозчик/.test(busic[i])) {
+          firstTime = true;
+          if (footer) {
+            footer = false;
+            // put in footer of the current Array
+          }
         }
+
+        //if (
+        //  (/\d{1,2}\.\d{2}\.\d{2,4}/.test(busic[i]) ||
+        //    /[Рабочие|Выходные]/.test(busic[i]) ||
+        //    /\d{1,2}\.\d{2}/.test(busic[i])) &&
+        //  firstTime
+        //) {
+        //  firstTime = false;
+        //  tudaObratno[0][polReisa] = busic[i];
+        //  polReisa++;
+        //}
       }
 
       console.log("polReisa " + polReisa);
