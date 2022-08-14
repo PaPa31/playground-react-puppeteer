@@ -32,4 +32,4 @@ const busRoutes = (props) => {
   );
 };
 
-export default React.memo(busRoutes);
+export default busRoutes;
