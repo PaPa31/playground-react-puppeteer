@@ -83,6 +83,7 @@ class Toggler extends Component {
     console.log("[Toggler/index.js] render");
     let _buses = null;
     let btnClass = null;
+    let btnMess;
 
     //if (this.state.showBuses) {
     _buses = this.state.buses.map((bus, i) => {
@@ -110,10 +111,20 @@ class Toggler extends Component {
       assignedClasses.push("bold");
     }
 
+    if (length == 2) {
+      btnMess = "Кликните заголовки только нужных колонок";
+    }
+    if (length == 1) {
+      btnMess = "Добавьте маршрут для сравнения:";
+    }
+    if (length == 0) {
+      btnMess = "Выберите маршрут:";
+    }
+
     return (
       <div className="Toggler">
         <h1>Da4aBus</h1>
-        <p className={assignedClasses.join(" ")}>Выберите маршрут:</p>
+        <p className={assignedClasses.join(" ")}>{btnMess}</p>
         <div className="Button">
           {BUSES.buses.map((bus, index) => {
             return (
@@ -129,7 +140,7 @@ class Toggler extends Component {
             );
           })}
         </div>
-        {_buses}
+        <div className="Buses">{_buses}</div>
       </div>
     );
   }

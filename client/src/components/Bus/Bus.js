@@ -164,32 +164,32 @@ class Bus extends Component {
       post = (
         <div className="Main">
           <h1>{this.props.num}</h1>
-          {tudaObratno[0][-2] ? <h2>{tudaObratno[0][-2]}</h2> : null}
-          {tudaObratno.map((i) => (
-            <div className="Head">
-              {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
-              <div className="One">
-                <div className="Bus">
-                  {i[-3] ? <h3>{i[-3]}</h3> : null}
-                  <PolReisa
-                    trip={i[-1]}
-                    dir="tuda"
-                    name={this.props.name}
-                    tudaObratno={i}
-                    holiday={i[-3]}
-                  />
-                  <PolReisa
-                    trip={i[-1]}
-                    dir="obratno"
-                    name={this.props.name}
-                    tudaObratno={i}
-                    holiday={i[-3]}
-                  />
-                </div>
+          <div className="Head">
+            {tudaObratno[0][-2] ? <h2>{tudaObratno[0][-2]}</h2> : null}
+            {tudaObratno.map((i) => (
+              <div className="subHead">
+                {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
+                {i[-3] ? <h3>{i[-3]}</h3> : null}
+                <PolReisa
+                  trip={i[-1]}
+                  dir="tuda"
+                  name={this.props.name}
+                  tudaObratno={i}
+                  holiday={i[-3]}
+                />
+                <PolReisa
+                  trip={i[-1]}
+                  dir="obratno"
+                  name={this.props.name}
+                  tudaObratno={i}
+                  holiday={i[-3]}
+                />
               </div>
-            </div>
-          ))}
-          {tudaObratno[0][-4] ? <h4>{tudaObratno[0][-4]}</h4> : null}
+            ))}
+          </div>
+          {tudaObratno[0][-4] ? (
+            <h4 className="subFooter">{tudaObratno[0][-4]}</h4>
+          ) : null}
         </div>
       );
     }

@@ -1,15 +1,54 @@
-.Bus {
-  display: inline-block;
-}
 .Main,
 .Head,
-.One {
+.subHead {
   display: inline-block;
   float: left;
 }
 
 h4 {
   clear: both;
-  max-width: fit-content;
+  max-width: min-content;
   text-align: left;
+}
+
+h2 {
+  margin-top: -25px;
+  margin-bottom: -2px;
+  font-size: 1.3em;
+  color: #5a5050;
+}
+
+h3 {
+  position: absolute;
+  margin-top: -1px;
+  margin-left: 25px;
+  font-size: 1.1em;
+}
+
+.subHead h2 {
+  margin-top: -24px;
+  margin-bottom: -3px;
+}
+
+.Main {
+  border: 1px dashed #333;
+}
+
+.subHead {
+  background: #ccc;
+  margin: 2px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-family: Helvetica;
+}
+
+.BusRoutes h4 {
+  padding-top: 3px;
+}
+
+.subFooter {
+  margin: 5px;
 }

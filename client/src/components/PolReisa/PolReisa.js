@@ -13,9 +13,9 @@ const busRoutes = (props) => {
   return (
     <div className="BusRoutes">
       {props.trip > 0 && props.dir === "tuda" ? (
-        <p>{props.name}:</p>
+        <h4>{props.name}:</h4>
       ) : (
-        <p>Сады:</p>
+        <h4>Сады:</h4>
       )}
       <table>
         <tbody>

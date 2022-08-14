@@ -54,4 +54,9 @@ button:hover {
 
 .Button {
   text-align: center;
+  margin-bottom: 15px;
+}
+
+.Buses {
+  display: inline-block;
 }
