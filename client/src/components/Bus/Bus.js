@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PolReisa from "../PolReisa/PolReisa";
-import puppeteer from "../../../puppeteer";
+//import puppeteer from "../../../puppeteer";
 import "./bus.css";
 
 class Bus extends Component {
@@ -8,59 +8,61 @@ class Bus extends Component {
     id: "",
     buses: [],
     selectedBus: null,
-    url: "https://orenburg.ru/activity/",
+    url: "./route-",
   };
 
-  handleSaveToPC = (jsonData, filename) => {
-    const fileData = JSON.stringify(jsonData);
-    const blob = new Blob([fileData], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = `${filename}.json`;
-    link.href = url;
-    link.click();
-  };
+  //handleSaveToPC = (jsonData, filename) => {
+  //  const fileData = JSON.stringify(jsonData);
+  //  const blob = new Blob([fileData], { type: "text/plain" });
+  //  const url = URL.createObjectURL(blob);
+  //  const link = document.createElement("a");
+  //  link.download = `${filename}.json`;
+  //  link.href = url;
+  //  link.click();
+  //};
 
   componentDidMount() {
     console.log("2 DidMount");
-    //const puppeteer = require("puppeteer");
 
-    async function fetchAndParse({ browserWSEndpoint, url }) {
+    async function fetchAndParse(url) {
       console.log(url);
 
       try {
-        const browser = await puppeteer.connect({
-          browserWSEndpoint,
-        });
+        const data = await fetch(url + ".json").then((res) => res.json());
+        console.log("RESSSSSSSSSSS " + data);
 
-        const page = await browser.newPage();
+        //const browser = await puppeteer.connect({
+        //  browserWSEndpoint,
+        //});
 
-        await page.setRequestInterception(true);
-        page.on("request", (request) => {
-          if (
-            ["image", "stylesheet", "font", "script"].indexOf(
-              request.resourceType()
-            ) !== -1
-          ) {
-            request.abort();
-          } else {
-            request.continue();
-          }
-        });
+        //const page = await browser.newPage();
 
-        await page.goto(url, { waitUntil: "load", timeout: 0 });
+        //await page.setRequestInterception(true);
+        //page.on("request", (request) => {
+        //  if (
+        //    ["image", "stylesheet", "font", "script"].indexOf(
+        //      request.resourceType()
+        //    ) !== -1
+        //  ) {
+        //    request.abort();
+        //  } else {
+        //    request.continue();
+        //  }
+        //});
 
-        let data = await page.evaluate(
-          () =>
-            Array.from(
-              document.querySelector("main").querySelectorAll("p")
-            ).map((elem) => elem.innerText.trim())
-          //.join(",\n")
-        );
+        //await page.goto(url, { waitUntil: "load", timeout: 0 });
 
-        console.log(data);
-        await page.close();
-        await browser.close();
+        //let data = await page.evaluate(
+        //  () =>
+        //    Array.from(
+        //      document.querySelector("main").querySelectorAll("p")
+        //    ).map((elem) => elem.innerText.trim())
+        //  //.join(",\n")
+        //);
+
+        //console.log(data);
+        //await page.close();
+        //await browser.close();
 
         return data;
       } catch (err) {
@@ -76,13 +78,19 @@ class Bus extends Component {
     if (this.props.num) {
       if (!b || (b && b.id !== this.props.num)) {
         console.log(this.props.id);
-        const normUrl = `${this.state.url}` + `${this.props.id}`;
-        fetchAndParse({
-          browserWSEndpoint: "ws://127.0.0.1:4000",
-          url: normUrl,
-        }).then((p) => {
+
+        const normUrl = `${this.state.url}` + `${this.props.num}`;
+        fetchAndParse(normUrl).then((p) => {
           return this.setState({ selectedBus: p });
         });
+
+        //const normUrl = `${this.state.url}` + `${this.props.id}`;
+        //fetchAndParse({
+        //  browserWSEndpoint: "ws://127.0.0.1:4000",
+        //  url: normUrl,
+        //}).then((p) => {
+        //  return this.setState({ selectedBus: p });
+        //});
       }
     }
   }
@@ -96,7 +104,7 @@ class Bus extends Component {
     const busic = this.state.selectedBus;
 
     if (busic) {
-      this.handleSaveToPC(busic, "route-" + this.props.num);
+      //this.handleSaveToPC(busic, "route-" + this.props.num);
       console.log("busic " + busic);
       const length = busic.length;
       console.log("length = " + length);
@@ -105,8 +113,6 @@ class Bus extends Component {
       let mas = 0;
       tudaObratno[mas] = [];
       let firstTime = true;
-      //let timeFirst = true;
-      //let noTimeFirst = true;
       let footer = true;
       //debugger;
       for (let i = 0; i < length; i++) {
