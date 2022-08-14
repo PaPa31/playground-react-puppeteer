@@ -7,3 +7,9 @@
   display: inline-block;
   float: left;
 }
+
+h4 {
+  clear: both;
+  max-width: fit-content;
+  text-align: left;
+}
