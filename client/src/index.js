@@ -24,8 +24,10 @@ class Toggler extends Component {
   }
   state = {
     buses: [],
-    showBuses: [false, false, false, false],
+    selectBuses: [false, false, false, false],
     changeCounter: 0,
+    showThere: true,
+    showFrom: true,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -46,29 +48,23 @@ class Toggler extends Component {
       if (id === bus.id) {
         console.log("Sovpalo");
 
-        //const doesShow = !this.state.showBuses;
-
-        const newShowBuses = [...this.state.showBuses];
-        newShowBuses[index] = !this.state.showBuses[index];
-        this.setState({ showBuses: newShowBuses }, function () {
-          console.log("THIS " + this.state.showBuses);
+        const newSelectBuses = [...this.state.selectBuses];
+        newSelectBuses[index] = !this.state.selectBuses[index];
+        this.setState({ selectBuses: newSelectBuses }, function () {
+          console.log("THIS " + this.state.selectBuses);
         });
 
-        if (newShowBuses[index]) {
+        if (newSelectBuses[index]) {
           console.log("FUUGGG");
           buses[index] = bus;
         } else {
           buses[index] = null;
         }
         console.log(buses);
-        //const newBuses = [...this.state.buses];
-        //newBuses[index] = bus;
+
         this.setState({ buses: buses }, function () {
           console.log("THIS " + JSON.stringify(this.state.buses));
         });
-
-        //const doesShow = true;
-        //this.setState({ showBuses: doesShow });
       }
     });
   };
@@ -77,6 +73,16 @@ class Toggler extends Component {
     let j = 0;
     array.map((i) => (i ? j++ : null));
     return j;
+  };
+
+  toggleColumnHandler = (dir) => {
+    if (dir === "showThere") {
+      const doesShow = this.state.showFrom;
+      this.setState({ showFrom: !doesShow });
+    } else {
+      const doesShow = this.state.showThere;
+      this.setState({ showThere: !doesShow });
+    }
   };
 
   render() {
@@ -89,8 +95,15 @@ class Toggler extends Component {
     _buses = this.state.buses.map((bus, i) => {
       //console.log("BBUSS.NUMMM " + bus.num);
       //console.log(bus.id);
-      return this.state.showBuses[i] ? (
-        <Bus key={bus.id} id={bus.id} num={bus.num} name={bus.name} />
+      return this.state.selectBuses[i] ? (
+        <Bus
+          key={bus.id}
+          id={bus.id}
+          num={bus.num}
+          name={bus.name}
+          there={this.state.showThere}
+          from={this.state.showFrom}
+        />
       ) : undefined;
     });
 
@@ -100,7 +113,7 @@ class Toggler extends Component {
 
     console.log("this.state.buses.length = " + this.state.buses.length);
 
-    const length = this.noNull(this.state.showBuses);
+    const length = this.noNull(this.state.selectBuses);
     console.log(length);
 
     const assignedClasses = [];
@@ -130,7 +143,7 @@ class Toggler extends Component {
             return (
               <button
                 key={index}
-                className={this.state.showBuses[index] ? btnClass : undefined}
+                className={this.state.selectBuses[index] ? btnClass : undefined}
                 onClick={() => {
                   this.onlyBusesHandler(bus.id);
                 }}
@@ -140,6 +153,20 @@ class Toggler extends Component {
             );
           })}
         </div>
+        {length > 0 && (
+          <div className="TwoButtons">
+            {this.state.showThere && (
+              <button onClick={() => this.toggleColumnHandler("showThere")}>
+                {this.state.showFrom ? "Из города" : "Вернуть"}
+              </button>
+            )}
+            {this.state.showFrom && (
+              <button onClick={() => this.toggleColumnHandler("showFrom")}>
+                {this.state.showThere ? "Из садов" : "Вернуть"}
+              </button>
+            )}
+          </div>
+        )}
         <div className="Buses">{_buses}</div>
       </div>
     );

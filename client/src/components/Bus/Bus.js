@@ -176,6 +176,7 @@ class Bus extends Component {
                   name={this.props.name}
                   tudaObratno={i}
                   holiday={i[-3]}
+                  there={this.props.there}
                 />
                 <PolReisa
                   trip={i[-1]}
@@ -183,6 +184,7 @@ class Bus extends Component {
                   name={this.props.name}
                   tudaObratno={i}
                   holiday={i[-3]}
+                  from={this.props.from}
                 />
               </div>
             ))}

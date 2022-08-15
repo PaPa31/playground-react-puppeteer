@@ -60,3 +60,7 @@ button:hover {
 .Buses {
   display: inline-block;
 }
+
+.TwoButtons {
+  margin-bottom: 10px;
+}

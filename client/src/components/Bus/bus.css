@@ -1,6 +1,7 @@
 .Main,
 .Head,
-.subHead {
+.subHead,
+.One {
   display: inline-block;
   float: left;
 }
