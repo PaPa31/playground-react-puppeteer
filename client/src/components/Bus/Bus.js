@@ -167,7 +167,14 @@ class Bus extends Component {
           <div className="Head">
             {tudaObratno[0][-2] ? <h2>{tudaObratno[0][-2]}</h2> : null}
             {tudaObratno.map((i) => (
-              <div className="subHead">
+              <div
+                className="subHead"
+                style={
+                  this.props.there && this.props.from
+                    ? { width: "10.3em" }
+                    : { width: "5.1em" }
+                }
+              >
                 {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
                 {i[-3] ? <h3>{i[-3]}</h3> : null}
                 <PolReisa

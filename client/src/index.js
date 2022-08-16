@@ -153,8 +153,8 @@ class Toggler extends Component {
             );
           })}
         </div>
-        {length > 0 && (
-          <div className="TwoButtons">
+        {length > 0 && (_buses || _chron) && (
+          <div className="Buttons">
             {this.state.showThere && (
               <button onClick={() => this.toggleColumnHandler("showThere")}>
                 {this.state.showFrom ? "Из города" : "Вернуть"}
