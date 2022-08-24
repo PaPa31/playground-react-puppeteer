@@ -158,33 +158,75 @@ class Bus extends Component {
           <h1>{this.props.num}</h1>
           <div className="Head">
             {tudaObratno[0][-2] ? <h2>{tudaObratno[0][-2]}</h2> : null}
-            {tudaObratno.map((i) => (
-              <div
-                className="subHead"
-                style={
-                  this.props.there && this.props.from
-                    ? { width: "10.3em" }
-                    : { width: "5.1em" }
-                }
-              >
-                {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
-                {i[-3] ? <h3>{i[-3]}</h3> : null}
-                <PolReisa
-                  trip={i[-1]}
-                  dir="tuda"
-                  name={this.props.name}
-                  tudaObratno={i}
-                  holiday={i[-3]}
-                  there={this.props.there}
-                />
-                <PolReisa
-                  trip={i[-1]}
-                  dir="obratno"
-                  name={this.props.name}
-                  tudaObratno={i}
-                  holiday={i[-3]}
-                  from={this.props.from}
-                />
+            {tudaObratno.map((i, index) => (
+              <div className="Even">
+                {index < 2 ? (
+                  <div
+                    className="subHead"
+                    style={
+                      this.props.there && this.props.from
+                        ? { width: "10.3em" }
+                        : { width: "5.1em" }
+                    }
+                  >
+                    {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
+                    {i[-3] ? <h3>{i[-3]}</h3> : null}
+                    <PolReisa
+                      trip={i[-1]}
+                      dir="tuda"
+                      name={this.props.name}
+                      tudaObratno={i}
+                      holiday={i[-3]}
+                      there={this.props.there}
+                    />
+                    <PolReisa
+                      trip={i[-1]}
+                      dir="obratno"
+                      name={this.props.name}
+                      tudaObratno={i}
+                      holiday={i[-3]}
+                      from={this.props.from}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <div className="Head">
+            {tudaObratno[2] && tudaObratno[2][-2] ? (
+              <h2>{tudaObratno[2][-2]}</h2>
+            ) : null}
+            {tudaObratno.map((i, index) => (
+              <div className="Even">
+                {index >= 2 ? (
+                  <div
+                    className="subHead"
+                    style={
+                      this.props.there && this.props.from
+                        ? { width: "10.3em" }
+                        : { width: "5.1em" }
+                    }
+                  >
+                    {i[-2] && !tudaObratno[0][-2] ? <h2>{i[-2]}</h2> : null}
+                    {i[-3] ? <h3>{i[-3]}</h3> : null}
+                    <PolReisa
+                      trip={i[-1]}
+                      dir="tuda"
+                      name={this.props.name}
+                      tudaObratno={i}
+                      holiday={i[-3]}
+                      there={this.props.there}
+                    />
+                    <PolReisa
+                      trip={i[-1]}
+                      dir="obratno"
+                      name={this.props.name}
+                      tudaObratno={i}
+                      holiday={i[-3]}
+                      from={this.props.from}
+                    />
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>
