@@ -52,7 +52,7 @@ class Bus extends Component {
         let data = await page.evaluate(
           () =>
             Array.from(
-              document.querySelector("main").querySelectorAll("p")
+              document.querySelector("main").querySelectorAll("p, h5")
             ).map((elem) => elem.innerText.trim())
           //.join(",\n")
         );
