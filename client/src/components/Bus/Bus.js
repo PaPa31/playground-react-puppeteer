@@ -11,15 +11,15 @@ class Bus extends Component {
     url: "https://orenburg.ru/activity/",
   };
 
-  //handleSaveToPC = (jsonData, filename) => {
-  //  const fileData = JSON.stringify(jsonData);
-  //  const blob = new Blob([fileData], { type: "text/plain" });
-  //  const url = URL.createObjectURL(blob);
-  //  const link = document.createElement("a");
-  //  link.download = `${filename}.json`;
-  //  link.href = url;
-  //  link.click();
-  //};
+  handleSaveToPC = (jsonData, filename) => {
+    const fileData = JSON.stringify(jsonData);
+    const blob = new Blob([fileData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = `${filename}.json`;
+    link.href = url;
+    link.click();
+  };
 
   componentDidMount() {
     console.log("2 DidMount");
@@ -96,7 +96,7 @@ class Bus extends Component {
     const busic = this.state.selectedBus;
 
     if (busic) {
-      //this.handleSaveToPC(busic, "route-" + this.props.num);
+      this.handleSaveToPC(busic, "route-" + this.props.num);
       console.log("busic " + busic);
       const length = busic.length;
       console.log("length = " + length);
